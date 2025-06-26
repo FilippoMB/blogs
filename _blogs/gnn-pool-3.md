@@ -153,7 +153,7 @@ While libraries such as [PyTorch Geometric](https://pytorch-geometric.readthedoc
 
 Here enters [Torch Geometric Pool](https://torch-geometric-pool.readthedocs.io/en/latest/)(tgp), the first library explicitly made for pooling in GNNs.
 
-<figure class="align-center" style="max-width:1500px; width:30%; margin:0 auto;">
+<figure class="align-center" style="max-width:1500px; width:45%; margin:0 auto;">
   <img src="https://raw.githubusercontent.com/tgp-team/torch-geometric-pool/main/docs/source/_static/img/tgp-logo-bar.svg"
        style="width:100%; height:auto;">
 </figure>
