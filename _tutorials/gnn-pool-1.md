@@ -1,4 +1,8 @@
-# 1/3 - Pooling in Graph Neural Networks
+---
+layout: single
+title:  Pooling in Graph Neural Networks
+nav_order: 1
+---
 
 December 2024
 

@@ -1,7 +1,7 @@
 ---
-layout: default
-title:  GNN Pooling 1
-# optional extra fields here
+layout: single
+title:  GNN Pooling 2
+nav_order: 2
 ---
 
 Introductory text …

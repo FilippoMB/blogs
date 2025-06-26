@@ -1,7 +1,7 @@
 # --- BASIC SITE META ---
-title: Tutorials and research notes
+title: Blogs, tutorials, and research notes
 author: Filippo Maria Bianchi
-description: A collection of tutorials and research notes by Filippo Maria Bianchi
+description: A collection of blogs, tutorials, and research notes by Filippo Maria Bianchi
 url: "https://filippomb.github.io"
 baseurl: "/blogs"          # <— important for project pages
 
@@ -23,6 +23,6 @@ collections:
 defaults:
   - scope:
       path: ""
-      type: pages
+      type: tutorials
     values:
       layout: single
