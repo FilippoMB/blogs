@@ -28,7 +28,7 @@ Let’s start!
 
 Before talking about pooling in GNNs let’s look at how pooling works in more traditional deep learning architectures, such as a Convolutional Neural Network (CNN).
 
-![Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.](1%203%20-%20Pooling%20in%20Graph%20Neural%20Networks%201203022a3e068090a496ef2d9cee1461/cnn.png)
+![Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.](../assets/figs/pooling/1/cnn.png)
 
 Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.
 

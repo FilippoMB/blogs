@@ -1,10 +1,14 @@
 ---
 layout: single
-title: Blogs, tutorials and research notes
+title: Welcome to my page of tutorials
 permalink: /
 ---
 
-## Available tutorials {#tutorials}
+This is a collection of tutorials and blog posts about my interests and research topics.
+
+<a id="tutorials"></a>
+
+## Available tutorials
 
 <ul>
 {% assign docs = site.tutorials | sort: "nav_order" %}

@@ -1,7 +1,7 @@
 # --- BASIC SITE META ---
-title: Blogs, tutorials, and research notes
+title: Filippo Maria Bianchi's Blogs
 author: Filippo Maria Bianchi
-# description: ""
+description: A collection of blogs, tutorials, and research notes by Filippo Maria Bianchi
 url: "https://filippomb.github.io"
 baseurl: "/blogs"          # <— important for project pages
 
