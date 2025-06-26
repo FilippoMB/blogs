@@ -7,7 +7,7 @@ baseurl: "/blogs"          # <— important for project pages
 
 # --- THEME ---
 remote_theme: mmistakes/minimal-mistakes
-minimal_mistakes_skin: "air"
+minimal_mistakes_skin: "dark"
 
 # --- PLUGINS ---
 plugins:
@@ -15,7 +15,7 @@ plugins:
 
 # --- COLLECTIONS ---
 collections:
-  pages:
+  tutorials:
     output: true
     permalink: /:title/
 

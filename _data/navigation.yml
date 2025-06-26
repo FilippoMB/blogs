@@ -1,0 +1,11 @@
+- title: Home
+  url: /
+- title: Tutorials
+  url: /          # points to index.md
+  children:
+    - title: GNN Pooling Tutorial 1/3
+      url: /gnn-pool-1/
+    - title: GNN Pooling Tutorial 2/3
+      url: /gnn-pool-2/
+    - title: GNN Pooling Tutorial 3/3
+      url: /gnn-pool-3/
