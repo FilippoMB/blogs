@@ -1,4 +1,28 @@
-theme: minima
-title: Blogs
+# --- BASIC SITE META ---
+title: Tutorials and research notes
 author: Filippo Maria Bianchi
-description: Homepage of Filippo's blogs
+description: A collection of tutorials and research notes by Filippo Maria Bianchi
+url: "https://filippomb.github.io"
+baseurl: "/blogs"          # <— important for project pages
+
+# --- THEME ---
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: "air"
+
+# --- PLUGINS ---
+plugins:
+  - jekyll-include-cache   # optional but recommended
+
+# --- COLLECTIONS ---
+collections:
+  pages:
+    output: true
+    permalink: /:title/
+
+# (Optional) DEFAULTS → tell MM to render every _pages file with the “single” layout
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
