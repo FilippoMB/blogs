@@ -38,11 +38,14 @@ A standard CNN alternates blocks of convolutional layers, which capture more and
 
 So, how does pooling work in this case? It simply produces a summary of adjacent pixels in the image. Depending on the function used to produce the summary one obtains different effects. Let’s consider **Max** and **Average** pooling, which are the most common ones.
 
-![image.png](../assets/figs/pooling/1/pool-squares.png)
 
-![The effect of applying Max and Average pooling on the same image.](../assets/figs/pooling/1/faces-pool.png)
 
-The effect of applying Max and Average pooling on the same image.
+<figure class="half">
+  <img src="{{ '/assets/figs/pooling/1/pool-squares.png' | relative_url }}" alt="Pooling kernels illustrated on colored squares" />
+  <img src="{{ '/assets/figs/pooling/1/faces-pool.png'  | relative_url }}" alt="Result of Max and Average pooling on a face image" />
+  <figcaption>Effect of applying <strong>Max</strong> and <strong>Average</strong> pooling on the same image.</figcaption>
+</figure>
+
 
 With Average pooling the neighboring pixels are averaged and one ends up with a blurry pooled image. If, instead, one takes the maximum among the patch of neighboring pixels, the obtained effect is that edges are enhanced and that the pooled image looks more sharp and flat. The final effect depends also on other factors, such as the kernel width (*i.e.*,how many pixels are pooled together) and the stride (*i.e.*, how far apart on the image are the patches of pixels that are pooled). But let’s leave these technicalities aside for now.
 
