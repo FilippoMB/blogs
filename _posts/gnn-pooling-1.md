@@ -1,5 +1,5 @@
 ---
-title: Pooling in Graph Neural Networks
+title: "Pooling in Graph Neural Networks"
 date: 2025-06-26
 ---
 
