@@ -4,8 +4,6 @@ title:  Pooling in Graph Neural Networks (1/3)
 nav_order: 1
 ---
 
-December 2024
-
 By [Filippo Maria Bianchi](https://sites.google.com/view/filippombianchi/home)
 
 This post is divided in three parts:
@@ -194,11 +192,9 @@ The $\texttt{CON}$ function is basically the same as $\texttt{RED}$, but it deal
 
 As we will see in the following, different families of graph pooling operators share some similarities in how they implement the $\texttt{SEL}$, $\texttt{RED}$, and $\texttt{CON}$ functions. 
 
-
 > **Note**  
 > Almost every graph pooling operator can be expressed through the SRC framework.
 {: .notice--primary}
-
 
 ## ❸ Global pooling
 
@@ -262,14 +258,14 @@ If you found this useful and want to cite it in your research, you can use the f
 
 [^kmis]:[Bacciu D., et al, “Generalizing Downsampling from Regular Data to Graphs”, 2022.](https://arxiv.org/abs/2208.03523)
 
-[11] [Wu C., et al., “From Maximum Cut to Maximum Independent Set”, 2024.](https://arxiv.org/abs/2408.06758)
+[^mis]: [Wu C., et al., “From Maximum Cut to Maximum Independent Set”, 2024.](https://arxiv.org/abs/2408.06758)
 
-[12] [Wang P., et al. “A Comprehensive Graph Pooling Benchmark: Effectiveness, Robustness and Generalizability”. 2024.](https://arxiv.org/abs/2406.09031)
+[^bench]:[Wang P., et al. “A Comprehensive Graph Pooling Benchmark: Effectiveness, Robustness and Generalizability”. 2024.](https://arxiv.org/abs/2406.09031)
 
-[13] [Lee J., et al., “Self-Attention Graph Pooling”, 2019.](https://arxiv.org/abs/1904.08082)
+[^sag]:[Lee J., et al., “Self-Attention Graph Pooling”, 2019.](https://arxiv.org/abs/1904.08082)
 
-[14] [Loukas A., “Graph reduction with spectral and cut guarantees”, 2019.](https://www.jmlr.org/papers/v20/18-680.html)
+[^similarity]:[Loukas A., “Graph reduction with spectral and cut guarantees”, 2019.](https://www.jmlr.org/papers/v20/18-680.html)
 
-[15] [Bianchi F. M. & Lachi V., “The expressive power of pooling in Graph Neural Networks”, 2023.](https://arxiv.org/abs/2304.01575)
+[^expr]:[Bianchi F. M. & Lachi V., “The expressive power of pooling in Graph Neural Networks”, 2023.](https://arxiv.org/abs/2304.01575)
 
-[16] [Xu K. et al., “How Powerful are Graph Neural Networks?”, 2019.](https://arxiv.org/abs/1810.00826)
+[^gin]:[Xu K. et al., “How Powerful are Graph Neural Networks?”, 2019.](https://arxiv.org/abs/1810.00826)
