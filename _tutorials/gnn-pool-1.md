@@ -28,7 +28,9 @@ Let’s start!
 
 Before talking about pooling in GNNs let’s look at how pooling works in more traditional deep learning architectures, such as a Convolutional Neural Network (CNN).
 
-![Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.](../assets/figs/pooling/1/cnn.png)
+{% include figure image_path="/assets/figs/pooling/1/cnn.png"
+   alt="VGG16 architecture"
+   caption="Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the feature maps." %}
 
 Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.
 
@@ -36,9 +38,9 @@ A standard CNN alternates blocks of convolutional layers, which capture more and
 
 So, how does pooling work in this case? It simply produces a summary of adjacent pixels in the image. Depending on the function used to produce the summary one obtains different effects. Let’s consider **Max** and **Average** pooling, which are the most common ones.
 
-![image.png](1%203%20-%20Pooling%20in%20Graph%20Neural%20Networks%201203022a3e068090a496ef2d9cee1461/image.png)
+![image.png](../assets/figs/pooling/1/pool-squares.png)
 
-![The effect of applying Max and Average pooling on the same image.](1%203%20-%20Pooling%20in%20Graph%20Neural%20Networks%201203022a3e068090a496ef2d9cee1461/image%201.png)
+![The effect of applying Max and Average pooling on the same image.](../assets/figs/pooling/1/faces-pool.png)
 
 The effect of applying Max and Average pooling on the same image.
 
