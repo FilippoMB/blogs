@@ -32,15 +32,17 @@ Before talking about pooling in GNNs let’s look at how pooling works in more t
    alt="VGG16 architecture"
    caption="Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the feature maps." %}
 
-Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the features maps.
+<figure>
+  <img src="{{ '/assets/figs/pooling/1/cnn.png' | relative_url }}" alt="VGG16 architecture" />
+  <figcaption>Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the feature maps.</figcaption>
+</figure>
 
 A standard CNN alternates blocks of convolutional layers, which capture more and more complex features within the image, with pooling layers. The latter gradually reduce the spatial dimensions until the whole image can be squeezed into a (long) vector. Such a vector is then digested by a classifier that produces in output the (hopefully) desired class of the input image.
 
 So, how does pooling work in this case? It simply produces a summary of adjacent pixels in the image. Depending on the function used to produce the summary one obtains different effects. Let’s consider **Max** and **Average** pooling, which are the most common ones.
 
 
-
-<figure class="half">
+<figure>
   <img src="{{ '/assets/figs/pooling/1/pool-squares.png' | relative_url }}" alt="Pooling kernels illustrated on colored squares" />
   <img src="{{ '/assets/figs/pooling/1/faces-pool.png'  | relative_url }}" alt="Result of Max and Average pooling on a face image" />
   <figcaption>Effect of applying <strong>Max</strong> and <strong>Average</strong> pooling on the same image.</figcaption>
