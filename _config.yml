@@ -9,6 +9,11 @@ baseurl: "/blogs"
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "contrast"
 
+# --- MATHJAX SCRIPTS ---
+head_scripts:
+  - /assets/js/mathjax_config.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+
 # --- PLUGINS ---
 plugins:
   - jekyll-include-cache   # optional but recommended
@@ -18,15 +23,14 @@ kramdown:
 
 # --- COLLECTIONS ---
 collections:
-  tutorials:
+  blogs:
     output: true
     permalink: /:title/
-
-# (Optional) DEFAULTS → tell MM to render every _pages file with the “single” layout
+    
 defaults:
   - scope:
       path: ""
-      type: tutorials
+      type: blogs
     values:
       layout: single
       toc: true

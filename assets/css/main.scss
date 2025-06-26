@@ -1,0 +1,16 @@
+---
+# This front-matter tells Jekyll to run the file through Sass.
+---
+
+/* 1️⃣  Pick your purple                                         */
+/*    Any valid CSS colour value works (#hex, rgb(), hsl(), etc.) */
+$brand-purple: #6E56CF;
+
+/* 2️⃣  Override theme variables *before* importing the theme    */
+$primary-color:        $brand-purple;   // background of btn--primary
+$btn-primary-color:    $brand-purple;   // border of btn--primary
+$btn-primary-text-color: #ffffff;       // text/icon colour on the button
+$link-color:           $brand-purple;   // optional: links site-wide
+
+/* 3️⃣  Now pull in the rest of the theme so it reuses the new vars */
+@import "minimal-mistakes";
