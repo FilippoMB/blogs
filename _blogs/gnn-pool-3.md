@@ -180,7 +180,7 @@ If you found this useful and want to cite it in your research, you can use the f
 @misc{bianchi2024intropool
   author = {Filippo Maria Bianchi},
   title = {An introduction to pooling in GNNs},
-  year = {2024},
+  year = {2025},
   howpublished = {\url{https://filippomb.github.io/blogs/gnn-pool-1/}}
 }
 ```
