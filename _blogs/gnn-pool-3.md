@@ -151,15 +151,15 @@ Let’s recap what we've covered in these posts.
 
 While libraries such as [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/) and [Spektral](https://graphneural.network/) come with several pooling operators already implemented, they lack more recent approaches and do not provide a unified API for the different pooling operators.
 
-Here enters [Torch Geometric Pool](https://torch-geometric-pool.readthedocs.io/en/latest/)(tgp), the first library explicitly made for pooling in GNNs.
+Here enters [Torch Geometric Pool](https://torch-geometric-pool.readthedocs.io/en/latest/) (🎱 tgp), the first library explicitly made for pooling in GNNs.
 
 <figure class="align-center" style="max-width:1500px; width:45%; margin:0 auto;">
   <img src="https://raw.githubusercontent.com/tgp-team/torch-geometric-pool/main/docs/source/_static/img/tgp-logo-bar.svg"
        style="width:100%; height:auto;">
 </figure>
 
-Explicitly designed for PyTorch Geometric, tgp implements every pooling operator according to the SRC framework. 
-Each pooling layer in tgp can be just dropped into a GNN architecture implemented in PyTorch Geometric, without making any major change to the original architecture or the training procedure, making it very easy to build a GNN with hierarchical pooling. Check out the [tutorials page](https://torch-geometric-pool.readthedocs.io/en/latest/tutorials/index.html) to learn how to use tgp at its best and to quickly design and deploy both new and existing pooling operators!
+Explicitly designed for PyTorch Geometric, 🎱 tgp implements every pooling operator according to the SRC framework. 
+Each pooling layer in 🎱 tgp can be just dropped into a GNN architecture implemented in PyTorch Geometric, without making any major change to the original architecture or to the training procedure, making it very easy to build a GNN with hierarchical pooling. Check out the [tutorials page](https://torch-geometric-pool.readthedocs.io/en/latest/tutorials/index.html) to learn how to use 🎱 tgp at its best, how to quickly deploy existing pooling operators, and how to design new ones!
 
 
 ### Open challenges
@@ -181,7 +181,7 @@ If you found this useful and want to cite it in your research, you can use the f
   author = {Filippo Maria Bianchi},
   title = {An introduction to pooling in GNNs},
   year = {2024},
-  howpublished = {\url{https://gnn-pooling.notion.site/}}
+  howpublished = {\url{https://filippomb.github.io/blogs/gnn-pool-1/}}
 }
 ```
 
