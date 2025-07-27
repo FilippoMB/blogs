@@ -6,7 +6,7 @@ nav_order: 3
 
 By [Filippo Maria Bianchi](https://sites.google.com/view/filippombianchi/home)
 
-This post is divided in three parts:
+This post is divided into three parts:
 
 <p class="btn-group">
   <a href="{{ '/gnn-pool-1/' | relative_url }}"
@@ -56,17 +56,17 @@ Let’s see these approaches in detail.
 
 ### Raw performance on the downstream task
 
-Clearly, the most straightforward approach is to equip a GNN with different pooling methods and see how it performs on a downstream task such as graph classification, graph regression, node classification, and so on. By looking, for example, at the different classification accuracies achieved, one could rank and select the pooling operators. Since this is intuitive and straightforward, this type of evaluation is the most popular in the literature. Thanks to their flexibility and capability to adapt well to the data and the task at hand, soft clustering methods usually achieve the best performance on several downstream task[^bench]. So, if memory and computational constraints are not an issues, equipping a GNN with these pooling methods is usually a good idea.
+Clearly, the most straightforward approach is to equip a GNN with different pooling methods and see how it performs on a downstream task such as graph classification, graph regression, node classification, and so on. By looking, for example, at the different classification accuracies achieved, one could rank and select the pooling operators. Since this is intuitive and straightforward, this type of evaluation is the most popular in the literature. Thanks to their flexibility and capability to adapt well to the data and the task at hand, soft clustering methods usually achieve the best performance on several downstream task[^bench]. So, if memory and computational constraints are not an issue, equipping a GNN with these pooling methods is usually a good idea.
 
-However, evaluating a pooling operator directly on the downstream task is very empirical and, most importantly, indirect. In some cases it is difficult to disentangle the effect of the pooling operator from the other GNN components, its capacity, the training scheme, and so on. In fact, it would be perfectly reasonable to ask ourselves if the same pooling operator would have performed better if inserted within a different GNN architecture or used in a different downstream task or with different data. Also, if one method is performing good or bad we might want to understand better what is going on and how to improve the design of our model.
+However, evaluating a pooling operator directly on the downstream task is very empirical and, most importantly, indirect. In some cases, it is difficult to disentangle the effect of the pooling operator from the other GNN components, its capacity, the training scheme, and so on. In fact, it would be perfectly reasonable to ask ourselves if the same pooling operator would have performed better if inserted within a different GNN architecture or used in a different downstream task or with different data. Also, if one method is performing good or bad we might want to understand better what is going on and how to improve the design of our model.
 
 To answer these questions, let us consider two additional performance measures presented in the original SRC paper[^src].
 
 ### Preserving node information
 
-The first approach focuses on evaluating how well the information contained in the vertices of the original graph is preserved in the pooled graph. Ideally, we would like a pooling operator to embed as much as possible of the original information in the pooled graph. If that is the case, most of the original information can be restored from it.
+The first approach focuses on evaluating how well the information contained in the vertices of the original graph is preserved in the pooled graph. Ideally, we would like a pooling operator to embed as much of the original information as possible in the pooled graph. If that is the case, most of the original information can be restored from it.
 
-To measure this property, we can use an AutoEncoder architecture that tries to reconstruct the original node features $\mathbf{X}$ from those of the pooled graph $\mathbf{X}'$. Let $\tilde{\mathbf{X}}$ be the reconstructed features, we train the graph Autoencoder by minimizing the following reconstruction loss
+To measure this property, we can use an AutoEncoder architecture that tries to reconstruct the original node features $\mathbf{X}$ from those of the pooled graph $\mathbf{X}'$. Let $\tilde{\mathbf{X}}$ be the reconstructed features. We train the graph Autoencoder by minimizing the following reconstruction loss
 
 $$
 \mathcal{L}_\text{rec} = \| \mathbf{X} - \tilde{\mathbf{X}} \|^2
@@ -75,10 +75,10 @@ $$
 <figure class="align-center" style="max-width:1500px; width:80%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/3/preserve_nodes.png' | relative_url }}"
        style="width:100%; height:auto;">
-  <figcaption>GNN architecture to evaluate the ability of a pooling method to preserve information from the original graph. The features of the original and reconstructed graph should be as similar as possible.</figcaption>
+  <figcaption>GNN architecture to evaluate the ability of a pooling method to preserve information from the original graph. The features of the original and reconstructed graphs should be as similar as possible.</figcaption>
 </figure>
 
-To see how this work in practice with different pooling operators let’s consider a set of point cloud graphs, where the node features are the coordinates of each point. If a pooling method manages to preserve most of the information in the pooled graph, the reconstructed point cloud should look similar to the original one.
+To see how this works in practice with different pooling operators, let’s consider a set of point cloud graphs, where the node features are the coordinates of each point. If a pooling method manages to preserve most of the information in the pooled graph, the reconstructed point cloud should look similar to the original one.
 
 <figure class="align-center" style="max-width:1500px; width:100%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/3/ae.png' | relative_url }}"
@@ -86,17 +86,17 @@ To see how this work in practice with different pooling operators let’s consid
   <figcaption>Original and reconstructed point cloud graphs when using six different pooling operators.</figcaption>
 </figure>
 
-From this example we see that one-over-*K* methods such as NDP[^ndp] performs particularly well. On the other hand, we clearly see the main limitation of score-based method such as the vanilla top-*K* pooler[^unet] and SAGPool[^sag] that, by keeping only nodes from the same part of the graph, they fail to reconstruct the other sections.
+From this example, we see that one-over-*K* methods such as NDP[^ndp] performs particularly well. On the other hand, we clearly see the main limitation of score-based methods, such as the vanilla top-*K* pooler[^unet] and SAGPool[^sag], which, by keeping only nodes from the same part of the graph, fail to reconstruct the other sections.
 
 ### Preserving topology
 
-Next, we might be interested in seeing how much the topology of the pooled graph resembles the topology of the original graph. Since the two graphs have different sizes, comparing directly the elements of the adjacency matrices $\mathbf{A}$ and $\mathbf{A}'$ is not possible. However, it is possible to compare the spectrum (*i.e.*, the eigenvalues) of their Laplacians, which should be as similar as possible. To encourage the spectra of the original and pooled graph to become similar, we can train a GNN to maximize the *spectral similarity* between the original and the pooled Laplacians[^similarity]. The spectral similarity is a measure that compares the first $D$ eigenvalues of the two Laplacians $\mathbf{L}$ and  $\mathbf{L}'$ and a loss that maximizes it can be defined as follows:
+Next, we might be interested in seeing how much the topology of the pooled graph resembles the topology of the original graph. Since the two graphs have different sizes, comparing directly the elements of the adjacency matrices $\mathbf{A}$ and $\mathbf{A}'$ is not possible. However, it is possible to compare the spectrum (*i.e.*, the eigenvalues) of their Laplacians, which should be as similar as possible. To encourage the spectra of the original and pooled graphs to become similar, we can train a GNN to maximize the *spectral similarity* between the original and the pooled Laplacians[^similarity]. The spectral similarity is a measure that compares the first $D$ eigenvalues of the two Laplacians $\mathbf{L}$ and  $\mathbf{L}'$, and a loss that maximizes it can be defined as follows:
 
 $$
 \mathcal{L}_\text{struct} = \sum_{i=0}^D \|\mathbf{X}_{:,i}^\top   \mathbf{L} \mathbf{X}_{:,i} -  \mathbf{X}_{:,i}^{'\top} \mathbf{L}'  \mathbf{X}'_{:,i}\|^2
 $$
 
-where $\mathbf{X}_ {:,i}$ and  $\mathbf{X}'_{:,i}$ is the $i$-th eigenvector of $\mathbf{L}$ and $\mathbf{L}'$, respectively. The GNN architecture used in this task is very simple and consists just of a stack of MP layers followed by a pooling layer.
+where $\mathbf{X}_ {:,i}$ and  $\mathbf{X}'_{:,i}$ is the $i$-th eigenvector of $\mathbf{L}$ and $\mathbf{L}'$, respectively. The GNN architecture used in this task is very simple and consists of a stack of MP layers followed by a pooling layer.
 
 <figure class="align-center" style="max-width:1500px; width:60%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/3/struct_preserve.png' | relative_url }}"
@@ -104,7 +104,7 @@ where $\mathbf{X}_ {:,i}$ and  $\mathbf{X}'_{:,i}$ is the $i$-th eigenvector of 
   <figcaption>GNN architecture used to evaluate the ability of a pooling method to preserve in the pooled graph the same structure of the original graph.</figcaption>
 </figure>
 
-Once the GNN is trained trained, we can compare the original and the pooled graphs and the adjacency matrices $\mathbf{A}$ and $\mathbf{A}'$ to see how similar they are.
+Once the GNN is trained, we can compare the original and the pooled graphs and the adjacency matrices $\mathbf{A}$ and $\mathbf{A}'$ to see how similar they are.
 
 <figure class="align-center" style="max-width:1500px; width:100%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/3/spectral.png' | relative_url }}"
@@ -112,7 +112,7 @@ Once the GNN is trained trained, we can compare the original and the pooled grap
   <figcaption>Adjacency matrix and structure of the original and pooled graph when using different pooling operators.</figcaption>
 </figure>
 
-The examples in the figure show that soft clustering methods produce pooled graphs that are very dense and, even if informative, they have a structure that do not resemble at all the one of the original graph.  On the other hand, since one-over-*K* methods perform a regular subsampling of the graph topology the structure of the pooled graph closely resemble that of the original graph.  Finally, a regular structure like the grid is very similar to any of its subparts, meaning that the pooled graph obtained by score-based methods has a spectrum very similar to the original graph. Note that this is generally not true in graphs with less regular structures, where the overall spectrum is different from the one of the subgraphs.
+The examples in the figure show that soft clustering methods produce pooled graphs that are very dense and, even if informative, they have a structure that do not resemble at all the one of the original graph.  On the other hand, since one-over-*K* methods perform a regular subsampling of the graph topology, the structure of the pooled graph closely resembles that of the original graph.  Finally, a regular structure like the grid is very similar to any of its subparts, meaning that the pooled graph obtained by score-based methods has a spectrum very similar to the original graph. Note that this is generally not true in graphs with less regular structures, where the overall spectrum is different from that of the subgraphs.
 
 ### Expressiveness
 
@@ -122,19 +122,19 @@ All the performance measures we saw so far are rather empirical and provide a qu
 
 The conditions for expressiveness are three and are relatively easy to check.
 
-1. The GNN part before the pooling layer must be expressive itself. To be sure that this is the case, it is enough to use expressive MP layer such as GIN[^gin]. This ensures that the node features $\mathbf{X}^L$ and $\mathbf{Y}^L$ associated with the two graphs $\mathcal{G}_1^L$ and $\mathcal{G}_2^L$ after applying $L$ MP layers are different, *i.e.*, $\sum_i^N \mathbf{x}_i^L \neq \sum_i^M \mathbf{y}_i^L$ , where $N$ and $M$ are the number of vertices in the two graphs.
-2.  The $\texttt{SEL}$ operation must be such that all nodes in the original graph are included in at least one supernode of the pooled graph. This condition can be conveniently checked by considering an association matrix $\mathbf{S} \in \mathbb{R}^{N \times K}$, analog to the one we saw in the soft clustering methods, that maps each node of the original graph to the nodes of the pooled graph. If the elements in each row of $\mathbf{S}$  sum to a constant value, *i.e.*, if $\sum_{j=1}^K s_{ij} = \lambda$, then each node from the original graph is represented in the pooled graph. 
-3. The $\texttt{RED}$ operation must ensure that the features of the pooled nodes  $\mathbf{X}_P$ (or $\mathbf{X}'$, as we called them before), are a weighted combination of the original features and the weights should be given by the membership values in $\mathbf{S}$ . This happens when $\mathbf{X}' = \mathbf{S}^\top \mathbf{X}$.
+1. The GNN part before the pooling layer must be expressive itself. To be sure that this is the case, it is enough to use an expressive MP layer such as GIN[^gin]. This ensures that the node features $\mathbf{X}^L$ and $\mathbf{Y}^L$ associated with the two graphs $\mathcal{G}_1^L$ and $\mathcal{G}_2^L$ after applying $L$ MP layers are different, *i.e.*, $\sum_i^N \mathbf{x}_i^L \neq \sum_i^M \mathbf{y}_i^L$ , where $N$ and $M$ are the number of vertices in the two graphs.
+2.  The $\texttt{SEL}$ operation must be such that all nodes in the original graph are included in at least one supernode of the pooled graph. This condition can be conveniently checked by considering an association matrix $\mathbf{S} \in \mathbb{R}^{N \times K}$, analogous to the one we saw in the soft clustering methods, that maps each node of the original graph to the nodes of the pooled graph. If the elements in each row of $\mathbf{S}$  sum to a constant value, *i.e.*, if $\sum_{j=1}^K s_{ij} = \lambda$, then each node from the original graph is represented in the pooled graph. 
+3. The $\texttt{RED}$ operation must ensure that the features of the pooled nodes  $\mathbf{X}_P$ (or $\mathbf{X}'$, as we called them before), are a weighted combination of the original features and the weights should be given by the membership values in $\mathbf{S}$. This happens when $\mathbf{X}' = \mathbf{S}^\top \mathbf{X}$.
 
 <figure class="align-center" style="max-width:1500px; width:100%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/3/expr.png' | relative_url }}"
        style="width:100%; height:auto;">
-  <figcaption>A GNN with expressive MP layers (condition 1) computes different features for graphs that are WL-distinguishable. A pooling layer satisfying the conditions 2 and 3 generates coarsened graphs  that are still distinguishable.</figcaption>
+  <figcaption>A GNN with expressive MP layers (condition 1) computes different features for graphs that are WL-distinguishable. A pooling layer satisfying conditions 2 and 3 generates coarsened graphs that are still distinguishable.</figcaption>
 </figure>
 
-If we look back at the definition of soft clustering method, we can easily see that they all satisfy condition 2 and 3 meaning that they are expressive. On the other hand, in score-based methods the rows of $\mathbf{S}$  associated with the dropped nodes are zero, because they are not assigned to any supernode. As such, score-based poolers are not expressive, meaning that it might be no longer possible to distinguish their pooled graphs even if the original graphs were different. For one-over-*K* methods the situation is a bit more complicated. Some methods like NDP are not expressive because they drop the nodes of one side of the MAXCUT partition. Other methods like *k*-MIS are expressive because they assign all nodes to those in the maximal independent set.
+If we look back at the definition of soft clustering methods, we can easily see that they all satisfy conditions 2 and 3, meaning that they are expressive. On the other hand, in score-based methods, the rows of $\mathbf{S}$  associated with the dropped nodes are zero, because they are not assigned to any supernode. As such, score-based poolers are not expressive, meaning that it might be no longer possible to distinguish their pooled graphs even if the original graphs were different. For one-over-*K* methods, the situation is a bit more complicated. Some methods, like NDP, are not expressive because they drop the nodes of one side of the MAXCUT partition. Other methods like *k*-MIS are expressive because they assign all nodes to those in the maximal independent set.
 
-An important remark is that the three conditions above are *sufficient but not necessary.* This means that an expressive pooling operator always creates pooled graph that are distinguishable if the original ones were distinguishable. However, there could also be a non-expressive pooling operator that produces distinguishable pooled graphs.
+An important remark is that the three conditions above are *sufficient but not necessary.* This means that an expressive pooling operator always creates pooled graphs that are distinguishable if the original ones were distinguishable. However, there could also be a non-expressive pooling operator that produces distinguishable pooled graphs.
 
 
 ## ❽ Concluding remarks
