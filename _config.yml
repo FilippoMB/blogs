@@ -9,6 +9,9 @@ baseurl: "/blogs"
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "contrast"
 
+# --- FAVICON ---
+favicon: "/assets/figs/favicon.svg"
+
 # --- MATHJAX SCRIPTS ---
 head_scripts:
   - /assets/js/mathjax_config.js
