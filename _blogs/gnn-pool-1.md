@@ -6,7 +6,7 @@ nav_order: 1
 
 By [Filippo Maria Bianchi](https://sites.google.com/view/filippombianchi/home)
 
-This post is divided in three parts:
+This post is divided into three parts:
 
 <p class="btn-group">
   <a href="{{ '/gnn-pool-1/' | relative_url }}"
@@ -34,7 +34,7 @@ This post is divided in three parts:
 
 Graph Neural Networks (GNNs) have emerged as powerful tools for modeling and analyzing graph-structured data, finding applications across diverse fields like social network analysis, bioinformatics, and recommender systems. Despite their success, scaling GNNs to handle larger and more complex graphs remains a significant challenge. Graph pooling plays a crucial role in enhancing their performance and making them more applicable to a larger class of datasets and applications.
 
-In this post I will give a gentle introduction to pooling in GNNs and an overview of the main families of existing graph pooling approaches. Then, I will present some possible ways to evaluate how good a pooling method is. As the focus in on a tutorial exposition, I will cover only a representative subset of all methods that exist in the literature. I also have tried to keep the notation and the nomenclature as uniform as possible, even if there is quite some variance in the literature.
+In this post, I will give a gentle introduction to pooling in GNNs and an overview of the main families of existing graph pooling approaches. Then, I will present some possible ways to evaluate how good a pooling method is. As the focus is on a tutorial exposition, I will cover only a representative subset of all methods that exist in the literature. I also have tried to keep the notation and the nomenclature as uniform as possible, even if there is quite some variance in the literature.
 
 In this part, I will give a brief introduction to GNNs, graph pooling, and to a general framework for expressing a generic graph pooling operator.
 
@@ -42,16 +42,16 @@ Let’s start!
 
 ## ❶ An introduction to pooling in GNNs
 
-Before talking about pooling in GNNs let’s look at how pooling works in more traditional deep learning architectures, such as a Convolutional Neural Network (CNN).
+Before talking about pooling in GNNs, let’s look at how pooling works in more traditional deep learning architectures, such as a Convolutional Neural Network (CNN).
 
 
 {% include figure image_path="/assets/figs/pooling/1/cnn.png"
    alt="VGG16 architecture"
    caption="Architecture of [VGG16](https://arxiv.org/abs/1409.1556), a traditional CNN for image classification. Blocks of convolutional layers are interleaved with pooling layers that gradually reduce the spatial dimensions of the feature maps." %}
 
-A standard CNN alternates blocks of convolutional layers, which capture more and more complex features within the image, with pooling layers. The latter gradually reduce the spatial dimensions until the whole image can be squeezed into a (long) vector. Such a vector is then digested by a classifier that produces in output the (hopefully) desired class of the input image.
+A standard CNN alternates blocks of convolutional layers, which capture more and more complex features within the image, with pooling layers. The latter gradually reduces the spatial dimensions until the whole image can be squeezed into a (long) vector. Such a vector is then digested by a classifier that produces as output the (hopefully) desired class of the input image.
 
-So, how does pooling work in this case? It simply produces a summary of adjacent pixels in the image. Depending on the function used to produce the summary one obtains different effects. Let’s consider **Max** and **Average** pooling, which are the most common ones.
+So, how does pooling work in this case? It simply produces a summary of adjacent pixels in the image. Depending on the function used to produce the summary, one obtains different effects. Let’s consider **Max** and **Average** pooling, which are the most common ones.
 
 <figure>
   <img src="{{ '/assets/figs/pooling/1/pool-squares.png' | relative_url }}" alt="Pooling kernels illustrated on colored squares" />
@@ -59,7 +59,7 @@ So, how does pooling work in this case? It simply produces a summary of adjacent
   <figcaption>Effect of applying <strong>Max</strong> and <strong>Average</strong> pooling on the same image.</figcaption>
 </figure>
 
-With Average pooling the neighboring pixels are averaged and one ends up with a blurry pooled image. If, instead, one takes the maximum among the patch of neighboring pixels, the obtained effect is that edges are enhanced and that the pooled image looks more sharp and flat. The final effect depends also on other factors, such as the kernel width (*i.e.*,how many pixels are pooled together) and the stride (*i.e.*, how far apart on the image are the patches of pixels that are pooled). But let’s leave these technicalities aside for now.
+With Average pooling, the neighboring pixels are averaged and one ends up with a blurry pooled image. If, instead, one takes the maximum among the patch of neighboring pixels, the obtained effect is that edges are enhanced and that the pooled image looks more sharp and flat. The final effect also depends on other factors, such as the kernel width (*i.e.*, how many pixels are pooled together) and the stride (*i.e.*, how far apart on the image are the patches of pixels that are pooled). But let’s leave these technicalities aside for now.
 
 Let’s see how these concepts extend to the graph domain by introducing the idea of graph convolutions and message passing.
 
@@ -101,7 +101,7 @@ We refer to this type of GNN architectures as *flat* as opposed to the ones with
   <figcaption>A hierarchical GNN architecture, with pooling layers between the MP layers.</figcaption>
 </figure>
 
-To reach the desired receptive field one should stack many MP layers, but this comes with a few issues. First, we risk to increase too much the model capacity, *i.e.*, the number of trainable parameters, which can lead to *overfitting*. In addition, repeatedly applying MP can create a problem called *oversmoothing*, were all node features end up being too similar. Finally, since the nodes of a graph are not independent, it is not trivial to break down a graph into mini-batches for training a GNN like other deep learning architectures. Therefore, one often has to handle the whole graph at once. If the graph is large, applying several MP layers can be computationally demanding and it would be beneficial to gradually reduce its size.
+To reach the desired receptive field, one should stack many MP layers, but this comes with a few issues. First, we risk to increase too much the model capacity, *i.e.*, the number of trainable parameters, which can lead to *overfitting*. In addition, repeatedly applying MP can create a problem called *oversmoothing*, where all node features end up being too similar. Finally, since the nodes of a graph are not independent, it is not trivial to break down a graph into mini-batches for training a GNN like other deep learning architectures. Therefore, one often has to handle the whole graph at once. If the graph is large, applying several MP layers can be computationally demanding, and it would be beneficial to gradually reduce its size.
 
 > **Note**  
 > A “flat*”* GNN that stacks many MP layers can lead to *overfitting* and *oversmoothing* and be computationally demanding.
@@ -109,7 +109,7 @@ To reach the desired receptive field one should stack many MP layers, but this c
 
 ### Hierarchical GNNs
 
-Let’s now focus on a GNN that alternates MP layers with pooling layers. We refer to this type of architecture as *hierarchical*. Like in CNNs, pooling layers reduce the spatial dimension by generating an intermediate structure, which for a GNN is a smaller graph rather than a smaller grid. This allows to expand more quickly the receptive field of the GNN and to extract more easily global properties of the graph such as its class.
+Let’s now focus on a GNN that alternates MP layers with pooling layers. We refer to this type of architecture as *hierarchical*. Like in CNNs, pooling layers reduce the spatial dimension by generating an intermediate structure, which for a GNN is a smaller graph rather than a smaller grid. This allows to expand more quickly the receptive field of the GNN and to extract more easily global properties of the graph, such as its class.
 
 > What kind of downstream tasks can be solved with hierarchical GNNs?
 
@@ -117,29 +117,29 @@ A lot of them! Let’s see the principal ones.
 
 ### **Graph-level tasks**
 
-Graph regression and classification are the most common graph-level tasks. These tasks closely resembles image classification, also in terms of the structure of the deep learning architecture: an alternation of MP/convolutions and pooling layers.
+Graph regression and classification are the most common graph-level tasks. These tasks closely resemble image classification, also in terms of the structure of the deep learning architecture: an alternation of MP/convolutions and pooling layers.
 
 <figure>
   <img src="{{ '/assets/figs/pooling/1/graph-level.png' | relative_url }}" alt="Pooling kernels illustrated on colored squares" />
   <figcaption>GNN architecture for graph-level tasks such as graph classification or regression.</figcaption>
 </figure>
 
-A graph-level task consists in predicting an output $y$, which can be either a real number (*e.g.*, a property of the molecule represented by the graph) or a categorical value (*e.g.*, the class of the graph). A classic example consists in determining if a molecular graph is mutagenic ($y=1$) or not ($y=0$). For this task, the pooling layers help to gradually distill the global property $y$ from the graph.
+A graph-level task consists of predicting an output $y$, which can be either a real number (*e.g.*, a property of the molecule represented by the graph) or a categorical value (*e.g.*, the class of the graph). A classic example consists in determining if a molecular graph is mutagenic ($y=1$) or not ($y=0$). For this task, the pooling layers help to gradually distill the global property $y$ from the graph.
 
 ### **Node-level tasks**
 
 These tasks include node classification and node regression, *i.e.*, predicting for each node $n$ a label $y_n$, which could be the class (node classification) or a numerical property (node regression). A classic example is that of citation networks, where nodes represent articles and their corpus, graph edges represent citations, and the task is to determine the class of some unlabelled nodes/articles.
 
-Node-level tasks are usually performed using flat GNNs architectures. After all, the classification has to be done is the same node space of the input data. If we reduce the graph size with pooling how do we go back? To do that, architectures such as the Graph U-Nets[^unet] adopt a hierarchical GNN that learns a latent low-dimensional graph representation with graph pooling. Afterwards, the latent representation is mapped back to the original node space through an *unpooling* (also called *lifting*) operation, which is complementary to the pooling operation.
+Node-level tasks are usually performed using flat GNN architectures. After all, the classification has to be done in the same node space as the input data. If we reduce the graph size with pooling, how do we go back? To do that, architectures such as the Graph U-Nets[^unet] adopt a hierarchical GNN that learns a latent low-dimensional graph representation with graph pooling. Afterwards, the latent representation is mapped back to the original node space through an *unpooling* (also called *lifting*) operation, which is complementary to the pooling operation.
 
 <figure>
   <img src="{{ '/assets/figs/pooling/1/node-level.png' | relative_url }}" alt="Pooling kernels illustrated on colored squares" />
   <figcaption>A hierarchical GNN architecture for node-level tasks such as node classification.</figcaption>
 </figure>
  
-These kind of architectures are similar to the U-Nets used in computer vision to perform image segmentation[^imgunet] or image generation with diffusion models[^diffusion]. Indeed, the latter are pixel-level tasks where the outputs (a segmentation mask or a denoised image) have the same spatial dimension of the inputs.
+These kinds of architectures are similar to the U-Nets used in computer vision to perform image segmentation[^imgunet] or image generation with diffusion models[^diffusion]. Indeed, the latter are pixel-level tasks where the outputs (a segmentation mask or a denoised image) have the same spatial dimension as the inputs.
 
-Even more similar to the Graph U-Nets are the graph filter banks[^banks]. A filter bank is a collection of filters that decompose a graph signal into different frequency components, typically by applying different graph-based operations such as graph Fourier transform[^fourier] and graph coarsening[^coarsening]. Note that graph coarsening is often used as an acronym for graph pooling especially in the graph signal processing literature.
+Even more similar to the Graph U-Nets are the graph filter banks[^banks]. A filter bank is a collection of filters that decompose a graph signal into different frequency components, typically by applying different graph-based operations such as graph Fourier transform[^fourier] and graph coarsening[^coarsening]. Note that graph coarsening is often used as an acronym for graph pooling, especially in the graph signal processing literature.
 
 > **Note**  
 > *Graph coarsening* is the term used in the signal processing community for graph pooling.
@@ -160,15 +160,15 @@ The GNN architecture used to perform this task is very simple: it just consists 
 
 ## ❷ A general framework for graph pooling
 
-Now that we have seen how to use a pooling operator within GNN architectures that solve different types of task, it is time to address the elephant in the room:
+Now that we have seen how to use a pooling operator within GNN architectures that solve different types of tasks, it is time to address the elephant in the room:
 
 > How to compute a pooled graph?
 
-This is a difficult question to answer because there are many different approaches for doing it and none of them is necessarily and always better than the others. It depends on what we want to achieve, what kind of graphs we are dealing with, how large they are, how much computing resources we have, and so on.
+This is a difficult question to answer because there are many different approaches for doing it and none of them is necessarily always better than the others. It depends on what we want to achieve, what kind of graphs we are dealing with, how large they are, how much computing resources we have, and so on.
 
 The problem of graph pooling, or graph coarsening, is an active area of research. And that’s not all. The problem of how to reduce a graph took different names and perspectives in many different disciplines, including machine learning, signal processing, discrete mathematics, optimization, linear algebra, and even statistics.
 
-To handle this variety of approaches and to provide a formal definition of graph pooling, a few years ago we proposed a general framework called **Select-Reduce-Connect (SRC)**[^src]. SRC is a sort of template that allows us to express any graph pooling operators. This framework is now commonly adopted in the graph pooling community and it’s implemented in deep learning libraries such as [PyTorch Geometric](https://github.com/pyg-team/pytorch_geometric/tree/master/torch_geometric/nn/pool) and [Spektral](https://graphneural.network/layers/pooling/#srcpool). Let’s see what SRC is about!
+To handle this variety of approaches and to provide a formal definition of graph pooling, a few years ago we proposed a general framework called **Select-Reduce-Connect (SRC)**[^src]. SRC is a sort of template that allows us to express any graph pooling operators. This framework is now commonly adopted in the graph pooling community, and it’s implemented in deep learning libraries such as [PyTorch Geometric](https://github.com/pyg-team/pytorch_geometric/tree/master/torch_geometric/nn/pool) and [Spektral](https://graphneural.network/layers/pooling/#srcpool). Let’s see what SRC is about!
 
 In SRC, a generic graph pooling operator is given by the composition of three functions: Select ($\texttt{SEL}$), Reduce ($\texttt{RED}$), and Connect ($\texttt{CON}$). Let’s say that our original graph has $N$ nodes and the node features of these nodes are stored in a set $\mathcal{X}$. Similarly, the graph has $E$ edges and the edge features are in a set $\mathcal{E}$. In the example below, the original graph has $N=5$ nodes and $E=5$ edges. Let’s also say that the pooled graph has $K$ *supernodes* with features  $\mathcal{X}'$, while the edge features are stored in a set  $\mathcal{E}'$. In the example, the pooled graph has 3 supernodes and 2 edges.
 
@@ -180,15 +180,15 @@ In SRC, a generic graph pooling operator is given by the composition of three fu
 
 ### Select
 
-The $\texttt{SEL}$  function is responsible to decide how many supernodes the pooled graph will have and which nodes of the original graph will end up in which supernode. For examples, the nodes {🔴, 🟥} will end in the first supernode, the nodes { 🟥 , 🟦} will be assigned to the second supernode, and the nodes {🟦, 🔵, 🔵} to the third. This can be summarized by the output of $\texttt{SEL}$ as $\mathcal{S}$ = **{**{🔴, 🟥}, { 🟥 , 🟦}, {🟦, 🔵, 🔵}**}**. Basically, $\texttt{SEL}$ determines which nodes are selected and how they are grouped together. Note that $\texttt{SEL}$  can also selects only a subset of the whole nodes and discard the others. For example, the output of $\texttt{SEL}$ could be $\mathcal{S}$ = **{**{🔴},  {🟦, 🔵}**}**, meaning the the pooled graph has $K=2$ supernodes. The $\texttt{SEL}$ function function is arguably the most important part of a pooling method. In fact, the specific implementation of the $\texttt{SEL}$ function is what mostly sets the different pooling methods apart.
+The $\texttt{SEL}$  function is responsible for deciding how many supernodes the pooled graph will have and which nodes of the original graph will end up in which supernode. For examples, the nodes {🔴, 🟥} will end in the first supernode, the nodes { 🟥 , 🟦} will be assigned to the second supernode, and the nodes {🟦, 🔵, 🔵} to the third. This can be summarized by the output of $\texttt{SEL}$ as $\mathcal{S}$ = **{**{🔴, 🟥}, { 🟥 , 🟦}, {🟦, 🔵, 🔵}**}**. Basically, $\texttt{SEL}$ determines which nodes are selected and how they are grouped together. Note that $\texttt{SEL}$ can also select only a subset of the whole nodes and discard the others. For example, the output of $\texttt{SEL}$ could be $\mathcal{S}$ = **{**{🔴},  {🟦, 🔵}**}**, meaning the the pooled graph has $K=2$ supernodes. The $\texttt{SEL}$ function is arguably the most important part of a pooling method. In fact, the specific implementation of the $\texttt{SEL}$ function is what mostly sets the different pooling methods apart.
 
 ### Reduce
 
-The $\texttt{RED}$ operations is the one responsible for computing the node features $\mathcal{X}'$ of the pooled graph. Each pooling method can implement the $\texttt{RED}$ function differently, but in general the result depends on: the node features $\mathcal{X}$, the topology of the original graph, and on the result $\mathcal{S}$ of the $\texttt{SEL}$ function. For example, let’s say that $\texttt{RED}$ computes the features $\mathcal{X}'$  by taking the sum, the max, or the average of the features of the nodes that are assigned by $\texttt{SEL}$ to the same supernode. We would get something like {🔴, 🟥} → 🔴, { 🟥 , 🟦} → 🟪, {🟦, 🔵, 🔵} → 🔵, *i.e.*, $\mathcal{X}'$ = {🔴, 🟪, 🔵}.
+The $\texttt{RED}$ operation is the one responsible for computing the node features $\mathcal{X}'$ of the pooled graph. Each pooling method can implement the $\texttt{RED}$ function differently, but in general, the result depends on: the node features $\mathcal{X}$, the topology of the original graph, and the result $\mathcal{S}$ of the $\texttt{SEL}$ function. For example, let’s say that $\texttt{RED}$ computes the features $\mathcal{X}'$  by taking the sum, the max, or the average of the features of the nodes that are assigned by $\texttt{SEL}$ to the same supernode. We would get something like {🔴, 🟥} → 🔴, { 🟥 , 🟦} → 🟪, {🟦, 🔵, 🔵} → 🔵, *i.e.*, $\mathcal{X}'$ = {🔴, 🟪, 🔵}.
 
 ### Connect
 
-The $\texttt{CON}$ function is basically the same as $\texttt{RED}$, but it deals with the edges and the edge features of the pooled graph. In particular, $\texttt{CON}$ decides how the nodes of pooled graph are going to be connected and what will end up in the edge features of the pooled graph. As for  $\texttt{RED}$, the output of $\texttt{CON}$ depends on the original graph and, clearly, also on $\mathcal{S}$.
+The $\texttt{CON}$ function is basically the same as $\texttt{RED}$, but it deals with the edges and the edge features of the pooled graph. In particular, $\texttt{CON}$ decides how the nodes of the pooled graph are going to be connected and what will end up in the edge features of the pooled graph. As for  $\texttt{RED}$, the output of $\texttt{CON}$ depends on the original graph and, clearly, also on $\mathcal{S}$.
 
 As we will see in the following, different families of graph pooling operators share some similarities in how they implement the $\texttt{SEL}$, $\texttt{RED}$, and $\texttt{CON}$ functions. 
 
@@ -198,7 +198,7 @@ As we will see in the following, different families of graph pooling operators s
 
 ## ❸ Global pooling
 
-In the next part, we will go into the details of the different families of pooling operators. But before doing that, let’s discuss the most simple and basic form of graph pooling: *global pooling.*
+In the next part, we will go into the details of the different families of pooling operators. But before doing that, let’s discuss the simplest and basic form of graph pooling: *global pooling.*
 
 <figure class="align-center" style="max-width:500px; width:60%; margin:0 auto;">
   <img src="{{ '/assets/figs/pooling/1/global-pool.png' | relative_url }}"
@@ -206,7 +206,7 @@ In the next part, we will go into the details of the different families of pooli
   <figcaption>Global pooling operators. They combine all the features of the graph into a single vector, which is the average, the sum, or the maximum of the node features.</figcaption>
 </figure>
 
-Global pooling combines the features from all the nodes in the graph. The output is not a graph but a single node (which, actually, can be seen as a special type of graph) whose features are given by the sum, the maximum, or the average of all the features of the nodes in the graph. Despite being so simple, global pooling is quite useful and popular. For example, is it always used at the end of a GNN for graph-level tasks to combine the features of the remaining nodes. The output is a vectorial representation of the graph that is processed by a classifier to predict the graph class $y$.
+Global pooling combines the features from all the nodes in the graph. The output is not a graph but a single node (which, actually, can be seen as a special type of graph) whose features are given by the sum, the maximum, or the average of all the features of the nodes in the graph. Despite being so simple, global pooling is quite useful and popular. For example, it is always used at the end of a GNN for graph-level tasks to combine the features of the remaining nodes. The output is a vectorial representation of the graph that is processed by a classifier to predict the graph class $y$.
 
 We are now ready to delve into the three main classes of hierarchical pooling operators: the soft clustering, the one-over-*K*, and the score-based pooling methods.
 
